@@ -1,0 +1,27 @@
+{
+  "name": "runequest-discordbot",
+  "version": "0.1.0",
+  "description": "Discord Bot for Chaosium's Runequest",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/MorganConrad/runequest-discordbot.git"
+  },
+  "keywords": [
+    "Discord",
+    "Runequest",
+    "Bot"
+  ],
+  "author": "Morgan Conrad <flyingspaniel@gmail.com> (http://flyingspaniel.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "http://github.com/MorganConrad/runequest-discordbot/issues"
+  }
+}
