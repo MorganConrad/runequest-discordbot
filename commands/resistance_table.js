@@ -6,7 +6,7 @@ function doHandle(userCommand, args, utils, subBot) {
   let def = parseInt(args[1], 10);
   let chance = 5*(att-def)+50;
 
-  return `Resistence Table: ${att} vs. ${def} => ${chance}`;
+  return `Resistance Table: ${att} vs. ${def} => ${chance}`;
 }
 
 

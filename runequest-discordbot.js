@@ -10,13 +10,15 @@ const fs = require('fs');
 const filenames =  fs.readdirSync('./commands').filter((filename) => filename.endsWith('.js'));
 const allCommands = filenames.map((filename) => require(`./commands/${filename}`) );
 
+let errorsLeft = config.errorMax || 20;
 
 function setup(loginKey) {
 
   // Only _after_ this will your bot start reacting to information received from Discord
-  client.once('ready', (foo) => {
+  client.once('ready', () => {
     console.log('I am ready!');
-    console.dir(foo);
+
+    client.user.setActivity(` ${config.prefix}`, { type: 2 });
   });
 
   // Create an event listener for messages
@@ -24,9 +26,21 @@ function setup(loginKey) {
     if (message.author.bot)  // ignore other bots
       return;
 
-    console.dir(message);
+    // console.dir(message);
 
-    let response = handleUserInput(message.content);
+    let response = null;
+    try {
+      response = handleUserInput(message.content);
+    }
+    catch (err) {
+      console.dir( { message, err });
+      if (--errorsLeft < 0) {
+        console.log("too many errors");
+        process.exit(-1);
+      }
+      else
+        response = "Sorry, there was an error processing your message: " + message.content;
+    }
     if (response)
       message.channel.send(response);
   });
@@ -39,14 +53,17 @@ function setup(loginKey) {
 function handleUserInput(line) {
   line = line.toLowerCase();
   if (line.startsWith(config.prefix) ) {
-    let [ignored, userCommand, ...args] = line.split(' ');
-    console.dir({userCommand, args});
+    let argumentsExcludingMentions = line.split(' ').filter((x) => !x.startsWith('<@!'));
+    let [ignored, userCommand, ...args] = argumentsExcludingMentions;
+    // console.dir({userCommand, args});
 
     let response = null;
     if (!userCommand || (userCommand === 'help'))
       response = doHelp(args);
     else if (userCommand === 'info')
-    response = doInfo(args);
+      response = doInfo(args);
+    else if (userCommand === 'err') // for testing
+      throw new Error('forced error');
     else
       response = delegateToCommands(userCommand, args);
 
@@ -81,7 +98,8 @@ function doInfo() {
 }
 
 function helpForCommand(acc, command) {
-  return acc + `[${command.aliases}] (${command.name})   ${command.help} \n`
+  let help = command.help || 'No help available';
+  return acc + `[${command.aliases}] (${command.name})   ${help} \n`
 }
 
 function handler100(userCommand, args, utilsIgnored, command) {
