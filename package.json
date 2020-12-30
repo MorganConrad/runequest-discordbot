@@ -6,9 +6,12 @@
   "dependencies": {
     "discord.js": "^12.5.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "^5.1.0"
+  },
   "scripts": {
-    "test": "test"
+    "runbot": "node index.js",
+    "test": "tape tests/*.test.js"
   },
   "repository": {
     "type": "git",

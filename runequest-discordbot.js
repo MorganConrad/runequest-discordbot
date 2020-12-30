@@ -7,15 +7,16 @@ const options = {};
 if (config.intents)
   options.ws = { intents: config.intents };
 
-const client = new Discord.Client(options);
-
 const fs = require('fs');
 const filenames =  fs.readdirSync('./commands').filter((filename) => filename.endsWith('.js'));
 const allCommands = filenames.map((filename) => require(`./commands/${filename}`) );
 
 let errorsLeft = config.errorMax || 20;
 
-function setup(loginKey) {
+function setup(loginKey, userOptions = {}) {
+  let _options = Object.assign({}, options, userOptions);
+
+  let client = new Discord.Client(_options);
 
   // Only _after_ this will your bot start reacting to information received from Discord
   client.once('ready', () => {
@@ -69,6 +70,8 @@ function setup(loginKey) {
 
   // Log our bot in using the token from https://discord.com/developers/applications
   client.login(loginKey);
+
+  return client;
 }
 
 

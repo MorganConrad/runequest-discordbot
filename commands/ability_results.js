@@ -5,7 +5,8 @@ function doHandle(userCommand, args, utils, commandIgnored) {
   let ability = utils.parseRoll(args[0]);
   let roll = utils.parseRoll(args[1]);
   let niceRoll = utils.formatRoll(roll);
-  let result = failOrFumble(ability, roll);
+  let result = failOrFumble(ability, roll) || autoSuccess(ability, roll);
+
   if (!result) {
     let crit = Math.round(ability / 20);
     if (roll <= crit)
@@ -36,6 +37,19 @@ function failOrFumble(ability, roll) {
   }
 
   return (roll > 95) ? "Failure" : null;
+}
+
+
+function autoSuccess(ability, roll) {
+  if (ability > 5)
+    return null;
+
+  if (roll === 1)
+    return "Critical"
+  else if (roll <= 5)
+    return "Success";
+  else
+    return null;
 }
 
 
