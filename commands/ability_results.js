@@ -1,11 +1,9 @@
-function doHandle(userCommand, args, utils, subBot) {
+function doHandle(userCommand, args, utils, commandIgnored) {
   if (args.length < 2)
     return null;
 
-  let ability = parseInt(args[0], 10);
-  let roll = parseInt(args[1], 10);
-  if (roll === 0)
-    roll = 100;
+  let ability = utils.parseRoll(args[0]);
+  let roll = utils.parseRoll(args[1]);
   let niceRoll = utils.formatRoll(roll);
   let result = failOrFumble(ability, roll);
   if (!result) {

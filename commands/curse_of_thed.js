@@ -1,4 +1,4 @@
-const CurseOfThed = ["Lose 1D6 POW",
+const CurseOfThed = ["0 filler", "Lose 1D6 POW",
 "Lose 1D6 POW",
 "Lose 1D6 POW",
 "Lose 2D6 POW",

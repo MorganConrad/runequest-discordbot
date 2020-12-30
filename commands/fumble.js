@@ -111,14 +111,20 @@ const Fumbles = ["0 filler",   // indoces are off by 10
 ]
 
 
+function doHandle(userCommand, args, utils, command) {
+  if (!args.length)
+    args = ['0'];
+  return args.map((arg) => doHandle1(userCommand, arg, utils, command)).join('\n');
+}
 
-function doHandle(userCommand, args, utils, subBot) {
-  let setRoll = args[0] ? parseInt(args[0], 10) : 0;
-  let { effect, roll } = utils.pick(subBot.data, setRoll);
+function doHandle1(userCommand, rollString, utils, command) {
+
+  let roll = utils.parseRoll(rollString);
+  let effect= utils.pick(command.data, roll);
   let nicelyFormattedRoll = utils.formatRoll(roll);
   let effectMessage = effectAttackOrParry(effect, userCommand)
 
-  return `${subBot.name} #${nicelyFormattedRoll}: ${effectMessage}`;
+  return `${command.name} #${nicelyFormattedRoll}: ${effectMessage}`;
 }
 
 

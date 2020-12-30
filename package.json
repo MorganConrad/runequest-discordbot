@@ -1,6 +1,6 @@
 {
   "name": "runequest-discordbot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Discord Bot for Chaosium's Runequest",
   "main": "index.js",
   "dependencies": {

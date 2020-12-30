@@ -7,10 +7,10 @@ Listens for commands with the prefix /rq.  Mentions are ignored.
 
 ## Commands
 
-Many commands take options numbers in the range 01-100
+Many commands take options numbers in the range 01-100 (00 also means 100), or "x" to mean pick one at random
 ```
  - cf        roll a random Chaotic Feature`
- - cf NN     Chaotic Feature NN
+ - cf NN x   Chaotic Feature NN, and also roll one at random
  - ct        roll a random Curset of Thed
  - ct NN     Curse of Thed NN
  - fa        roll a random Fumbled Attack
@@ -34,8 +34,10 @@ ChaosFeature #77: Functional extra appendage or body part. Modify hit locations 
 /rq rt 14 12
 Resistance Table: 14 vs. 12 => 60
 
-/rq ct          (random Curse of Thed)
-CurseOfThed #50: Takes 3 points of damage in random location each melee round until spell expires.*
+/rq ct 54 x x  (Curse of Thed 54, plus 2 random ones)
+CurseOfThed #54: Add +3 to damage of all weapons hitting the victim.*
+CurseOfThed #63: Victim becomes physically indistinguishable from caster of spell.
+CurseOfThed #48: All foes have +30% chance to hit victim.*
 
 /rq fu          (Random fumble, show both attack and parry result)
 Fumble #83:
@@ -100,9 +102,9 @@ You should export **one** of the following
  - `data[]`:  an array of 101 strings. Useful if this is just a random table like Chaos Features.
    - 0 is filler.
    - `'"'` means "ditto" to save typing.
- - `handler(userCommand, args, utils, command)` for something more complex.
+ - `doHandle(userCommand, args, utils, command)` for something more complex.
    - userCommand: the command they used, e.g. "cf"
-   - args[]:  any remaining args, e.g. [65, 89]
+   - args[]:  any remaining args, e.g. ['65', '89']
    - utils: some utiity functions
    - command: your command (sort of `this`, usually ignored`)
 
@@ -116,7 +118,7 @@ You should export **one** of the following
 ## TODOs
 
  - better permanent server
- - allow multiple arguments to some commands, like `cf 56 33 88` to show three chaotic features
+ - ~~allow multiple arguments to some commands, like `cf 56 33 88` to show three chaotic features~~ done as of v0.1.1
  - more commands TBD
  - fix bugs TBD
 
