@@ -1,4 +1,5 @@
-
+[![Build Status](https://secure.travis-ci.org/MorganConrad/runequest-discordbot.png)](https://travis-ci.org/MorganConrad/runequest-discordbot)
+[![License](https://img.shields.io/badge/license-MIT-A31F34.svg)](https://github.com/MorganConrad/runequest-discordbot)
 # runequest-discordbot
 
 A Discord bot to support [Chaosium's](https://www.chaosium.com/) fantasy role playing game
@@ -61,8 +62,10 @@ and 20% less for each point of Rune magic spell on weapon).
 To try that, use the invite link
 [https://discord.com/oauth2/authorize?client_id=791106265283690497&scope=bot](https://discord.com/oauth2/authorize?client_id=791106265283690497&scope=bot)
 
-Please don't overdo it!
- - Currently, this server only collects and logs information on errors.
+Please don't overdo it!  Currently, this server only collects and logs information on
+ - servers ("guilds") at startup.
+ - errors.
+ - when it is used on a new server or channel.
 
 ### Create your own version
 This requires a basic familiarity with javascript and node.js.
@@ -73,19 +76,20 @@ This requires a basic familiarity with javascript and node.js.
      - also note the "secret"
      - Invite it to your server or channel.  It should show up as offline
  4. On the computer with the code. `node index.js SECRET`
-    - or store secret in the `RQ_DiscordBotKey` environment variable
+    - or, better, store secret in the `RQ_DiscordBotKey` environment variable
  5. The rq bot should shortly appear as "online".
 
 ### Configuration
 
-see config.js.  You can change the prefix there.
+see config.js.  You can change the prefix (and other things) there.
 
 ## Design Notes
 ### The main bot code is in runequest-discordbot.js.  It
   - reads all the command bots in the subdirectory './commands'
   - `setup()` does initial login, and installing listeners
+  - converts the input to lowercase
   - checks for the prefix "/rq"
-  - gets tha arguments, filtering out any mentions
+  - gets the arguments, filtering out any mentions
   - checks for and handles "help" and "info"
   - most commands are handled via `delegateToCommands()`
 
@@ -95,6 +99,7 @@ To add your own command, follow the overall design in any of the existing comman
 
  - name:    a user-friendly name, e.g. "ChaosFeature",
  - aliases: an array of commands you support, e.g. ['cf', 'chaosfeature']
+    - use lowercase, since the input has been converted toLowerCase.
     - don't conflict with other ones!
  - help:    a help string
 
@@ -114,6 +119,7 @@ You should export **one** of the following
 
  `node test.js /rq mycommand arg0 arg1`
 
+The tests folder holds some basic unit tests.
 
 ## TODOs
 
