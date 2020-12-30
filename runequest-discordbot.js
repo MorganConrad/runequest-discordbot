@@ -128,7 +128,7 @@ function helpForCommand(acc, command) {
 
 function handler100s(userCommand, args, utilsIgnored, command) {
   if (!args.length)
-    args = ['0'];
+    args = ['x'];
   return args.map((x) => handler100(userCommand, x, utilsIgnored, command)).join('\n');
 }
 

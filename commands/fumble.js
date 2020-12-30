@@ -113,7 +113,7 @@ const Fumbles = ["0 filler",   // indoces are off by 10
 
 function doHandle(userCommand, args, utils, command) {
   if (!args.length)
-    args = ['0'];
+    args = ['x'];
   return args.map((arg) => doHandle1(userCommand, arg, utils, command)).join('\n');
 }
 
