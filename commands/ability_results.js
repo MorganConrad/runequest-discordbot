@@ -1,3 +1,16 @@
+/**
+ * Command to determine the result of a die roll
+ *   args = [ability% (e.g. 95), die roll (e.g. 18)]
+ *
+ */
+
+const CRITICAL = "Critical";
+const SPECIAL = "Special";
+const SUCCESS = "Success";
+const FAILURE = "Failure";
+const FUMBLE = "Fumble";
+
+
 function doHandle(userCommand, args, utils, commandIgnored) {
   if (args.length < 2)
     return null;
@@ -5,20 +18,20 @@ function doHandle(userCommand, args, utils, commandIgnored) {
   let ability = utils.parseRoll(args[0]);
   let roll = utils.parseRoll(args[1]);
   let niceRoll = utils.formatRoll(roll);
-  let result = failOrFumble(ability, roll) || autoSuccess(ability, roll);
+  let result = failOrFumble(ability, roll) || alwaysSomeChance(ability, roll);
 
   if (!result) {
-    let crit = Math.round(ability / 20);
-    if (roll <= crit)
-      result = "Critical";
+    let critPct = Math.round(ability / 20);
+    if (roll <= critPct)
+      result = CRITICAL;
   }
   if (!result) {
-    let special = Math.round(ability / 5);
-    if (roll <= special)
-    result = "Special";
+    let specialPct = Math.round(ability / 5);
+    if (roll <= specialPct)
+    result = SPECIAL;
   }
   if (!result)
-    result = (roll <= Math.max(ability, 5)) ? "Success" : "Failure";
+    result = (roll <= Math.max(ability, 5)) ? SUCCESS : FAILURE;
 
   return `Ability: ${ability}  Roll: ${niceRoll} => ${result}`;
 }
@@ -27,27 +40,28 @@ function doHandle(userCommand, args, utils, commandIgnored) {
 function failOrFumble(ability, roll) {
   if (ability >= 100) {
     if (roll === 100)
-      return "Fumble";
+      return FUMBLE;
   }
 
   else { // skill <100
-    let critPct = Math.round((100 - ability) / 20);
-    if ((roll + critPct) >= 100)
-      return "Fumble";
+    let fumblePct = Math.round((100 - ability) / 20);
+    if ((roll + fumblePct) >= 100)
+      return FUMBLE;
   }
 
-  return (roll > 95) ? "Failure" : null;
+  return (roll > 95) ? FAILURE : null;
 }
 
 
-function autoSuccess(ability, roll) {
+// for abilities <= 5
+function alwaysSomeChance(ability, roll) {
   if (ability > 5)
     return null;
 
   if (roll === 1)
-    return "Critical"
+    return CRITICAL;
   else if (roll <= 5)
-    return "Success";
+    return SUCCESS;
   else
     return null;
 }

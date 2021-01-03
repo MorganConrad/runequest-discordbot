@@ -42,3 +42,17 @@ test("5 and under", function(t) {
   t.end();
 });
 
+
+test("resistance table", function(t) {
+  const rnd10_19 = Math.floor(Math.random() * 10) + 10;
+  let testResult = bot.handleUserInput(`/rq rt ${rnd10_19} ${rnd10_19+2}`);
+  t.true(testResult.endsWith("40"));
+  testResult = bot.handleUserInput(`/rq rt ${rnd10_19+3} ${rnd10_19}`);
+  t.true(testResult.endsWith("65"));
+  testResult = bot.handleUserInput(`/rq rt ${rnd10_19+12} ${rnd10_19}`);
+  t.true(testResult.endsWith("95"));
+  testResult = bot.handleUserInput(`/rq rt ${rnd10_19-12} ${rnd10_19}`);
+  t.true(testResult.endsWith("5"));
+  t.end();
+
+})

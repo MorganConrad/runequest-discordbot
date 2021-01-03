@@ -3,11 +3,11 @@ and roll 1D8 for compass direction it goes;
 with 1=north, 2=northeast, 3=east, 4=southeast, 5=south, 6=southwest, 7=west, 8=northwest).`;
 const SHATTERED_83_86 = `shattered (100% chance if unenchanted;
 10% less for each point of battle magic spell on weapon,
-and 20% less for each point of Rune magic spell on weapon).`
+and 20% less for each point of Rune magic spell on weapon).`;
 const HIT_NEAREST_FRIEND = 'Hit nearest friend (hit self if no friend near); do ';
 const WIDE_OPEN = 'Wide open; foe automatically hits with ';
 
-const Fumbles = ["0 filler",   // indoces are off by 10
+const Fumbles = ["0 filler",   // indices are off by 10 lines
 'Lose next parry.',
 '"',
 '"',
@@ -108,7 +108,7 @@ const Fumbles = ["0 filler",   // indoces are off by 10
 { a: 'Hit self; do critical hit.', p: WIDE_OPEN + 'critical hit.'},
 'Blow it; roll twice on this table, and apply both results.\nIf this result is rolled again, continue rolling until two otherresults are achieved.',
 'Blow it badly; roll three times on this table, and apply all three results.\nIf this result is rolled again, continue rolling'
-]
+];
 
 
 function doHandle(userCommand, args, utils, command) {
@@ -120,9 +120,9 @@ function doHandle(userCommand, args, utils, command) {
 function doHandle1(userCommand, rollString, utils, command) {
 
   let roll = utils.parseRoll(rollString);
-  let effect= utils.pick(command.data, roll);
+  let effect = utils.pick(command.data, roll);
   let nicelyFormattedRoll = utils.formatRoll(roll);
-  let effectMessage = effectAttackOrParry(effect, userCommand)
+  let effectMessage = effectAttackOrParry(effect, userCommand);
 
   return `${command.name} #${nicelyFormattedRoll}: ${effectMessage}`;
 }
@@ -147,5 +147,5 @@ module.exports = {
   data: Fumbles,
   doHandle,
   help: 'todo'
-}
+};
 

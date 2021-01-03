@@ -13,23 +13,28 @@ const allCommands = filenames.map((filename) => require(`./commands/${filename}`
 
 let errorsLeft = config.errorMax || 20;
 
+
+/**
+ * Create, setup listeners, then login a Discord Client
+ * @param loginKey  {string}  required
+ * @param userOptions  (optional)
+ * @returns {Discord.Client}
+ */
 function setup(loginKey, userOptions = {}) {
   let _options = Object.assign({}, options, userOptions);
 
+  /* 1. Create */
   let client = new Discord.Client(_options);
 
-  // Only _after_ this will your bot start reacting to information received from Discord
+  /* 2. setup listeners (length) */
   client.once('ready', () => {
-    client.user.setActivity(` ${config.prefix}`, { type: 2 });
-
-    // console.dir(client);
-
     console.log(config.name + ' is ready!  Existing Guilds:');
     console.dir( { guilds : client.guilds.cache.mapValues((c) => c.name) } );
+    return client.user.setActivity(` ${config.prefix}`, { type: 2 });
   });
 
 
-
+  // main function for message handling
   client.on('message', function(message) {
     if (message.author.bot)  // ignore other bots (and myself)
       return;
@@ -42,7 +47,7 @@ function setup(loginKey, userOptions = {}) {
     }
 
     if (!knownGuildChannels.includes(guildAndChannel)) {
-      console.log("New Guild.Channel: " + guildAndChannel);
+      console.log(`New Guild.Channel: ${guildAndChannel} joined at ${new Date()}`);
       knownGuildChannels.push(guildAndChannel);
     }
 
@@ -51,25 +56,32 @@ function setup(loginKey, userOptions = {}) {
       response = handleUserInput(message.content);
     }
     catch (err) {
-      console.dir( { message, err });
-      if (--errorsLeft < 0) {
-        console.log("too many errors");
-        process.exit(-1);
-      }
-      else
-        response = "Sorry, there was an error processing your message: " + message.content;
+      response = "Sorry, there was an error processing your message: " + message.content;
+      console.dir({message, err});
+      --errorsLeft;
     }
-    if (response)
-      message.channel.send(response);
+
+    if (response) {
+      message.channel.send(response)
+        .then(function() {
+          if (errorsLeft <= 0) {
+            console.log(`**Exiting**, too many errors at ${new Date()}`);
+            process.exit(-1);
+          }
+        });
+    }
+
   });
 
 
+  // log when we join a new guild
   client.on("guildCreate", function(guild) {  // doesn't seem to do much...
     console.log("Joined a new guild: " + guild.name);
   });
 
-  // Log our bot in using the token from https://discord.com/developers/applications
-  client.login(loginKey);
+  /* 3. Log our bot in using the token from https://discord.com/developers/applications */
+  client.login(loginKey)
+    .then(() => client);
 
   return client;
 }
@@ -78,16 +90,21 @@ function setup(loginKey, userOptions = {}) {
 function handleUserInput(line) {
   line = line.toLowerCase();
   if (line.startsWith(config.prefix) ) {
+
     let argumentsExcludingMentions = line.split(' ').filter((x) => !x.startsWith('<@!'));
     let [ignored, userCommand, ...args] = argumentsExcludingMentions;
 
     let response = null;
+
+    // handle 'help', 'info'
     if (!userCommand || (userCommand === 'help'))
       response = doHelp(args);
     else if (userCommand === 'info')
       response = doInfo(args);
     else if (userCommand === 'err') // for testing
       throw new Error('forced error');
+
+    // other commands get delegated
     else
       response = delegateToCommands(userCommand, args);
 
@@ -102,7 +119,7 @@ function delegateToCommands(userCommand, args) {
 
   for (let command of allCommands) {
     if (command.aliases.includes(userCommand)) {
-      let doHandle = command.doHandle || handler100s;
+      let doHandle = command.doHandle || utils.handler100s;
       return doHandle(userCommand, args, utils, command);
     }
   }
@@ -123,22 +140,7 @@ function doInfo() {
 
 function helpForCommand(acc, command) {
   let help = command.help || 'No help available';
-  return acc + `[${command.aliases}] (${command.name})   ${help} \n`
-}
-
-function handler100s(userCommand, args, utilsIgnored, command) {
-  if (!args.length)
-    args = ['x'];
-  return args.map((x) => handler100(userCommand, x, utilsIgnored, command)).join('\n');
-}
-
-
-function handler100(userCommand, rollString, utilsIgnored, command) {
-  let roll = utils.parseRoll(rollString);
-  let effect = utils.pick(command.data, roll);
-  let nicelyFormattedRoll = utils.formatRoll(roll);
-
-  return `${command.name} #${nicelyFormattedRoll}: ${effect}`;
+  return acc + `  [${command.aliases}] (${command.name})   ${help} \n`
 }
 
 

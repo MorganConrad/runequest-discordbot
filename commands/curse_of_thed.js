@@ -11,7 +11,7 @@ const CurseOfThed = ["0 filler", "Lose 1D6 POW",
 "Lose 2D6 DEX",
 "Lose 3D6 DEX",
 "Lose 2D6 STR",
-"Lose 3D6 STR",
+"Lose 2D6 STR",
 "Lose 4D6 STR",
 "Lose 2D6 CON",
 "Lose 2D6 CON",
@@ -102,7 +102,7 @@ const CurseOfThed = ["0 filler", "Lose 1D6 POW",
 
 module.exports = {
   name: "CurseOfThed",
-  aliases: ['ct', 'cot', 'curseofthed'],
+  aliases: ['ct', 'cot', 'thed', 'curseofthed'],
   data: CurseOfThed,
   help: 'todo'
 }
