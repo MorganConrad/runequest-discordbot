@@ -143,7 +143,7 @@ function effectAttackOrParry(rawEffect, userCommand) {
 
 module.exports = {
   name: "Fumble",
-  aliases: ['fa', 'fp', 'fu', 'fumble', 'fumbledattack', 'fumbledparry'],
+  aliases: ['fumble', 'fa', 'fp', 'fu', 'fumbledattack', 'fumbledparry'],
   data: Fumbles,
   doHandle,
   help: 'todo'

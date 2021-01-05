@@ -4,23 +4,30 @@
 
 A [Discord](https://discord.com/) bot to support [Chaosium's](https://www.chaosium.com/) fantasy role playing game
 [Runequest](https://www.chaosium.com/runequest/).
-Listens for commands with the prefix /rq.  
+Listens for commands with the prefix /rq.
  - All text is converted to lowercase
  - Mentions (e.g. @JohnDoe) are ignored.
 
 ## Commands
 
-Many commands take optional numbers in the range 01-100 (00 also means 100), or use "x" to mean pick one at random
+Many commands take one or more optional numbers NN in the range 01-100 (00 also means 100), or use "x" to mean pick one at random
 
-### Game System (Resistance Table, Abilities, Attack, Parry, Dodge)
-```
- - rt AA DD  calculate resistance table percent for Attacker (AA) vs. Defender (DD)
- - ar SS RR  show ability result (Success, Critical, etc.) for skill SS and roll RR
- - ad AR DR  show end result for Attacker level of success (e.g. special) vs. Dodge level (e.g. critical)
- - ap AR DP  show end result for Attacker level of success (e.g. special) vs. Parry level (e.g. failure)
-```
+|command|arguments|description|shortcut|
+|-------|---------|-----------|--------|
+|resistance|AA DD|calculate resistance table percent for Attacker (AA) vs. Defender (DD)|rt|
+|success   |SS RR|show ability result (Normal, Critical, etc.) for skill SS and roll RR|ar|
+|melee     |AL PL|show end result for Attacker level of success (e.g. special) vs. Parry level (e.g. failure)||
+|meleedodge|AL DL|show end result for Attacker level of success (e.g. special) vs. Dodge level (e.g. critical)|
+|fumble    |NN?  |fumble NN, or random|fu, fa, fp, fd|
+|chaos     |NN?  |Chaotic Feature NN, or random|cf|
+|thed      |NN?  |Curse of Thed NN, or random|ct|
+|spirit    |NN?  |Summon Ancestral Spirit NN, or random||
+|spell     |NN?  |Spirit Magic Spell NN, or random|sm|
+|help      |     |Help||
+|info      |     |Information||
 
-#### Alternatives (aliases) for Levels of Success (save typing)
+
+#### Alternatives (shortcut aliases) for Levels of Success (save typing)
 ```
  - critical: cr, crit
  - special:  sp, impale, slash, crush
@@ -28,52 +35,24 @@ Many commands take optional numbers in the range 01-100 (00 also means 100), or 
  - failure:  m, miss
  - fumble:   fu, fa, fp, fd
 ```
-### Fumbles
-```
- - fa        roll a random Fumbled Attack
- - fp        roll a random Fumbled Parry
- - fu        roll a random Fumble and show both results
- - fa,fp, and fu also take an optional NN
 
-```
-
-### Chaos
-```
- - cf        roll a random Chaotic Feature`
- - cf NN x   Chaotic Feature NN, and also roll one at random
- - ct        roll a random Curse of Thed
- - ct NN     Curse of Thed NN
-```
-
-### Spirits and Spirit Magic
-```
- - sp        summon a random ancestral spirit
- - sp NN     ancestral spirit NN
- - sm NN x   generate spirit magic NN, and one at random
-```
-
-### Miscelaneous
-```
- - help      help
- - info      information
-```
 ## Examples (notes in parentheses)
 
 ```
-/rq ar 56 58    (skill 56, roll 58)
+/rq success 56 58    (skill 56, roll 58)
 Ability: 56  Roll: 58 => Failure
 
-/rq ad sp m     (special attack vs. missed dodge)
+/rq meleedodge slash miss     (special attack vs. missed dodge)
 Attack special vs. Dodge failure:
 Attack does special success damage.
 
-/rq ap m sp     (missed attack vs. special parry)
+/rq melee m sp  (missed attack vs. special parry)
 Attack failure vs. Parry special:
-Attack parried or deflected..
+Attack parried or deflected.
 Defender rolls parrying weapon’s special damage.
 Attacking weapon’s HP is reduced by any damage over its current HP.
 
-/rq fu          (Random fumble, show both attack and parry result)
+/rq fumble       (Random fumble, show both attack and parry result)
 Fumble #83:
   Attack: Weapon shattered (100% chance if unenchanted;
 10% less for each point of battle magic spell on weapon,
@@ -87,27 +66,28 @@ Fumble #83: Weapon shattered (100% chance if unenchanted;
 10% less for each point of battle magic spell on weapon,
 and 20% less for each point of Rune magic spell on weapon).
 
-/rq rt 14 12
+/rq resistance 14 12
 Resistance Table: 14 vs. 12 => 60
 
 
-/rq cf @abc 77  (chaotic feature 77, the mention is ignored)
-ChaosFeature #77: Functional extra appendage or body part. Modify hit locations accordingly.
+/rq chaos @abc 77  (chaotic feature 77, the mention is ignored)
+Chaos Feature #77: Functional extra appendage or body part. Modify hit locations accordingly.
 
-/rq ct 54 x x  (Curse of Thed 54, plus 2 random ones)
-CurseOfThed #54: Add +3 to damage of all weapons hitting the victim.*
-CurseOfThed #63: Victim becomes physically indistinguishable from caster of spell.
-CurseOfThed #48: All foes have +30% chance to hit victim.*
+/rq thed 54 x x  (Curse of Thed 54, plus 2 random ones)
+Curse Of Thed #54: Add +3 to damage of all weapons hitting the victim.*
+Curse Of Thed #63: Victim becomes physically indistinguishable from caster of spell.
+Curse Of Thed #48: All foes have +30% chance to hit victim.*
 
-/rq sp          (random spirit)
+/rq spirit       (random spirit)
 Ancestral Spirit #37: Neutral, POW 3D6+6, 1D3 Spirit Spells, 0 Rune Points
-Use /rq ss ... to generate random spirit spells
+Use /rq spell ... to generate random spirit spells
 
-/rq sm x x      (generate 2 random spirit magic spells)
+/rq spell x x      (generate 2 random spirit magic spells)
 Spirit Magic #90: Visibility
 Spirit Magic #72: Spirit Screen
 ```
 
+Many of the commands have shorter aliases as noted.
 ## Installation
 
 ### The bot may or may not be running on my Raspberry pi.

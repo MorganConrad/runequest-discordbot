@@ -103,7 +103,7 @@ const ANCESTRAL_SPIRITS = ["0 filler", "Friendly, POW 5D6+6, 4D3 Spirit Spells, 
 function doHandle(userCommand, args, utils, command) {
   let r = utils.handler100s(userCommand, args, utils, command);
   if (r)
-    r += "\nUse /rq ss ... to generate random spirit spells";
+    r += "\nUse /rq spell ... to generate random spirit spells";
 
   return r;
 }
@@ -111,7 +111,7 @@ function doHandle(userCommand, args, utils, command) {
 
 module.exports = {
   name: "Ancestral Spirit",
-  aliases: ['sp', 'spirit', 'summon', 'ancestralspirit'],
+  aliases: ['spirit', 'summon', 'ancestralspirit'],
   data: ANCESTRAL_SPIRITS,
   doHandle,
   help: "Summon an ancestral spirit"

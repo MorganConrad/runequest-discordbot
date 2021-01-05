@@ -87,7 +87,7 @@ function doHandle(userCommand, args, utils, commandIgnored) {
 
 module.exports = {
   name: "Attack and Parry Results",
-  aliases: ['ap', 'apr', 'avp', 'attackparryresults'],
+  aliases: ['melee', 'ap', 'avp', 'attackparry'],
   data: [],
   doHandle,
   help: HELP

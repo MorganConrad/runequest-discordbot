@@ -4,7 +4,7 @@ const bot = require('../runequest-discordbot');
 
 const EDGE_CASES = [
   [47, 9, "Special"],
-  [47, 10, "Success"],
+  [47, 10, "Normal"],
   [48, 10, "Special"],
 
   [69, 4, "Special"],
@@ -35,7 +35,7 @@ test("96 and over", function(t) {
 test("5 and under", function(t) {
   for (let roll = 5; roll > 1; roll--) {
     let testResult = bot.handleUserInput(`/rq ar 3 ${roll}`);
-    t.true(testResult.endsWith("Success"), testResult);
+    t.true(testResult.endsWith("Normal"), testResult);
   }
   let testResult = bot.handleUserInput(`/rq ar 3 1`);
   t.true(testResult.endsWith("Critical"), testResult);
@@ -49,10 +49,12 @@ test("resistance table", function(t) {
   t.true(testResult.endsWith("40"));
   testResult = bot.handleUserInput(`/rq rt ${rnd10_19+3} ${rnd10_19}`);
   t.true(testResult.endsWith("65"));
+
+  // note - results > 100 and < 0  now supported
   testResult = bot.handleUserInput(`/rq rt ${rnd10_19+12} ${rnd10_19}`);
-  t.true(testResult.endsWith("95"));
+  t.true(testResult.endsWith("110"));
   testResult = bot.handleUserInput(`/rq rt ${rnd10_19-12} ${rnd10_19}`);
-  t.true(testResult.endsWith("5"));
+  t.true(testResult.endsWith("-10"));
   t.end();
 
 })

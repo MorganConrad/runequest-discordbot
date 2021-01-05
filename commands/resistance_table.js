@@ -11,10 +11,13 @@ function doHandle(userCommand, args, utils, command) {
   let att = parseInt(args[0], 10);
   let def = parseInt(args[1], 10);
   let chance = 5 * (att - def) + 50;
+
+  /* allow values <5 and >95
   if (chance < 5)
     chance = 5;
   else if (chance > 95)
     chance = 95;
+  */
 
   return `Resistance Table: ${att} vs. ${def} => ${chance}`;
 }
@@ -24,7 +27,7 @@ function doHandle(userCommand, args, utils, command) {
 
 module.exports = {
   name: "Resistance Table",
-  aliases: ['rt', 'resistancetable'],
+  aliases: ['resistance', 'rt', 'resistancetable'],
   doHandle,
   help: '<attacker characteristic> <defender characteristic>'
 };

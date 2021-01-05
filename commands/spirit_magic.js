@@ -102,7 +102,7 @@ const SPIRIT_MAGIC_SPELLS = [ "0 filler", "Befuddle",
 
 module.exports = {
   name: "Spirit Magic",
-  aliases: ['sm', 'ss', 'spell', 'ancestorrandomspiritspell'],
+  aliases: ['spell', 'sm', 'spiritmagic'],
   data: SPIRIT_MAGIC_SPELLS,
   help: "Generate a spirit magic spell"
 };

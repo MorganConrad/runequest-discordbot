@@ -6,7 +6,7 @@
 
 const CRITICAL = "Critical";
 const SPECIAL = "Special";
-const SUCCESS = "Success";
+const NORMAL = "Normal";
 const FAILURE = "Failure";
 const FUMBLE = "Fumble";
 
@@ -31,7 +31,7 @@ function doHandle(userCommand, args, utils, commandIgnored) {
     result = SPECIAL;
   }
   if (!result)
-    result = (roll <= Math.max(ability, 5)) ? SUCCESS : FAILURE;
+    result = (roll <= Math.max(ability, 5)) ? NORMAL : FAILURE;
 
   return `Ability: ${ability}  Roll: ${niceRoll} => ${result}`;
 }
@@ -61,7 +61,7 @@ function alwaysSomeChance(ability, roll) {
   if (roll === 1)
     return CRITICAL;
   else if (roll <= 5)
-    return SUCCESS;
+    return NORMAL;
   else
     return null;
 }
@@ -69,7 +69,7 @@ function alwaysSomeChance(ability, roll) {
 
 module.exports = {
   name: "Ability Results Table",
-  aliases: ['ar', 'art', 'abilityresults'],
+  aliases: ['success', 'level', 'ar', 'abilityresults'],
   data: [],
   doHandle,
   help: '<ability> <roll>'

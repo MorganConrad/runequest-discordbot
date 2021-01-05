@@ -101,8 +101,8 @@ const ChaosFeatures = [ "0 filler", "+1D6 POW",
 ];
 
 module.exports = {
-  name: "ChaosFeature",
-  aliases: ['cf', 'chaos', 'chaosfeature'],
+  name: "Chaos Feature",
+  aliases: ['chaos', 'cf', 'chaosfeature'],
   data: ChaosFeatures,
   help: "todo"
 }
