@@ -8,6 +8,8 @@ Listens for commands with the prefix /rq.
  - All text is converted to lowercase
  - Mentions (e.g. @JohnDoe) are ignored.
 
+[Technical Presentation for Port Townsend Web Developers](docs/presentation.md)
+
 ## Commands
 
 Many commands take one or more optional numbers NN in the range 01-100 (00 also means 100), or use "x" to mean pick one at random

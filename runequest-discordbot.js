@@ -80,10 +80,8 @@ function setup(loginKey, userOptions = {}) {
   });
 
   /* 3. Log our bot in using the token from https://discord.com/developers/applications */
-  client.login(loginKey)
+  return client.login(loginKey)
     .then(() => client);
-
-  return client;
 }
 
 
@@ -91,7 +89,7 @@ function handleUserInput(line) {
   line = line.toLowerCase();
   if (line.startsWith(config.prefix) ) {
 
-    let argumentsExcludingMentions = line.split(' ').filter((x) => !x.startsWith('<@!'));
+    let argumentsExcludingMentions = line.split(/ +/).filter((x) => !x.startsWith('<@!'));
     let [ignored, userCommand, ...args] = argumentsExcludingMentions;
 
     let response = null;

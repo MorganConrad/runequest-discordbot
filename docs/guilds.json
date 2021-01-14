@@ -1,0 +1,94 @@
+{
+  "id": "REDACTED_NUMERIC_ID",
+  "name": "rayquest",
+  "icon": null,
+  "description": null,
+  "splash": null,
+  "discovery_splash": null,
+  "features": [],
+  "emojis": [],
+  "banner": null,
+  "owner_id": "REDACTED_NUMERIC_ID",
+  "application_id": null,
+  "region": "us-west",
+  "afk_channel_id": null,
+  "afk_timeout": 300,
+  "system_channel_id": "REDACTED_NUMERIC_ID",
+  "widget_enabled": false,
+  "widget_channel_id": null,
+  "verification_level": 0,
+  "roles": [
+      {
+          "id": "REDACTED_NUMERIC_ID",
+          "name": "@everyone",
+          "permissions": "104324681",
+          "position": 0,
+          "color": 0,
+          "hoist": false,
+          "managed": false,
+          "mentionable": false
+      },
+      {
+          "id": "REDACTED_NUMERIC_ID",
+          "name": "Dice Maiden",
+          "permissions": "11264",
+          "position": 4,
+          "color": 0,
+          "hoist": false,
+          "managed": true,
+          "mentionable": false,
+          "tags": {
+              "bot_id": "678901234567890123"
+          }
+      },
+      {
+          "id": "REDACTED_NUMERIC_ID",
+          "name": "Marshmallow",
+          "permissions": "8",
+          "position": 3,
+          "color": 0,
+          "hoist": false,
+          "managed": true,
+          "mentionable": false,
+          "tags": {
+              "bot_id": "REDACTED_NUMERIC_ID"
+          }
+      },
+      {
+          "id": "REDACTED_NUMERIC_ID",
+          "name": "Simple Poll",
+          "permissions": "347200",
+          "position": 2,
+          "color": 0,
+          "hoist": false,
+          "managed": true,
+          "mentionable": false,
+          "tags": {
+              "bot_id": "REDACTED_NUMERIC_ID"
+          }
+      },
+      {
+          "id": "REDACTED_NUMERIC_ID",
+          "name": "admin",
+          "permissions": "2142756607",
+          "position": 1,
+          "color": 0,
+          "hoist": false,
+          "managed": false,
+          "mentionable": false
+      }
+  ],
+  "default_message_notifications": 0,
+  "mfa_level": 0,
+  "explicit_content_filter": 0,
+  "max_presences": null,
+  "max_members": 100000,
+  "max_video_channel_users": 25,
+  "vanity_url_code": null,
+  "premium_tier": 0,
+  "premium_subscription_count": 0,
+  "system_channel_flags": 0,
+  "preferred_locale": "en-US",
+  "rules_channel_id": null,
+  "public_updates_channel_id": null
+}

@@ -1,0 +1,57 @@
+[
+  {
+      "id": "REDACTED_NUMERIC_ID",
+      "type": 0,
+      "content": "Sent an e-mail about tomorrow's game. Included is a link to the \"things you can learn by listening to your guides, or by speaking with experienced travelers before leaving Sartar\" page:   http://rqglorantha.pbworks.com/w/page/139792449/Prax#NotesforOutsiders",
+      "channel_id": "REDACTED_NUMERIC_ID",
+      "author": {
+          "id": "REDACTED_NUMERIC_ID",
+          "username": "Michael Blum",
+          "avatar": "REDACTED_31_CHAR_ID",
+          "discriminator": "1234",
+          "public_flags": 0
+      },
+      "attachments": [],
+      "embeds": [],
+      "mentions": [],
+      "mention_roles": [],
+      "pinned": true,
+      "mention_everyone": false,
+      "tts": false,
+      "timestamp": "2020-11-07T23:43:33.861000+00:00",
+      "edited_timestamp": null,
+      "flags": 0
+  },
+
+  {
+      "id": "REDACTED_NUMERIC_ID",
+      "type": 0,
+      "content": "1st draft of Rune Affinity Rules",
+      "channel_id": "REDACTED_NUMERIC_ID",
+      "author": {
+          "id": "REDACTED_NUMERIC_ID",
+          "username": "morganconrad",
+          "avatar": "REDACTED_31_CHAR_ID",
+          "discriminator": "2345",
+          "public_flags": 0
+      },
+      "attachments": [
+          {
+              "id": "REDACTED_NUMERIC_ID",
+              "filename": "Runes.pdf",
+              "size": 31250,
+              "url": "https://cdn.discordapp.com/attachments/REDACTED_NUMERIC_ID/REDACTED_NUMERIC_ID/Runes.pdf",
+              "proxy_url": "https://media.discordapp.net/attachments/REDACTED_NUMERIC_ID/REDACTED_NUMERIC_ID/Runes.pdf"
+          }
+      ],
+      "embeds": [],
+      "mentions": [],
+      "mention_roles": [],
+      "pinned": true,
+      "mention_everyone": false,
+      "tts": false,
+      "timestamp": "2018-08-23T00:19:47.969000+00:00",
+      "edited_timestamp": null,
+      "flags": 0
+  }
+]
