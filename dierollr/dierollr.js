@@ -9,7 +9,8 @@ let temps = {}
 function handleUserInput(message) {
   // console.log("in dierollr");
   // console.dir(message);
-  let [line, comment] = message.content.substr(2).split('//');
+  op = "+"; // always start in + mode
+  let [line, comment] = message.content.substr(2).toLowerCase().split('//');
 
   line = line.replace(/ +/g, '');  // eliminate all spaces
   if (line.startsWith('='))
