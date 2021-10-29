@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const utils = require('./utils');
 const config = require('./config');
+const dieRollr = require('./dierollr/dierollr.js');
 let knownGuildChannels = [];
 
 const options = {};
@@ -53,7 +54,7 @@ function setup(loginKey, userOptions = {}) {
 
     let response = null;
     try {
-      response = handleUserInput(message.content);
+      response = handleUserInput(message);
     }
     catch (err) {
       response = "Sorry, there was an error processing your message: " + message.content;
@@ -85,8 +86,10 @@ function setup(loginKey, userOptions = {}) {
 }
 
 
-function handleUserInput(line) {
-  line = line.toLowerCase();
+function handleUserInput(message) {
+  // console.dir(message);
+  let line = message.content.toLowerCase();
+
   if (line.startsWith(config.prefix) ) {
 
     let argumentsExcludingMentions = line.split(/ +/).filter((x) => !x.startsWith('<@!'));
@@ -108,6 +111,8 @@ function handleUserInput(line) {
 
     return response || 'rq-bot: bad input ' + line;
   }
+  else if (line.startsWith(config.dierollPrefix))
+    return dieRollr(message);
 
   return null;
 }

@@ -6,6 +6,7 @@ module.exports = {
   logLevel: 0,
   intents: (1 << 0) | (1 << 6) | (1 << 9) | (1 << 12),   // GUILD_MESSAGES and DIRECT_MESSAGES
 
+  dierollPrefix: "/r",
   successAliases: {
     critical: ['critical', 'cr', 'crit'],
     special:  ['special', 'sp', 'impale', 'slash', 'crush'],
