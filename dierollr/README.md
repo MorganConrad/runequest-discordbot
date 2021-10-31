@@ -26,7 +26,7 @@ Certain common weapons are included as two letter abbreviations
 |bs|Broadsword|
 |gs|Greatsword|
 |ba|Battle Ax|
-|bs|Great Ax|
+|ga|Great Ax|
 |cb|Composite Bow|
 
  - add an extra "s" at the end to roll "Special" damage
