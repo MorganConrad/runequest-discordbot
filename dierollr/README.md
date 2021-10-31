@@ -11,6 +11,7 @@ This is a new beta feature for doing [Runequest](https://www.chaosium.com/runequ
 Following the opening `/r ` is a string describing the die roll
 
 |example|description|
+|-------|-----------|
 |d6|roll a d6 (a 6 sided die)|
 |2d8+3|roll two d8m and add 3 to the result|
 |d8-3+d4|roll a d8, a d4, and subtract 3|
@@ -20,6 +21,8 @@ Following the opening `/r ` is a string describing the die roll
 
 Certain common weapons are included as two letter abbreviations
 
+|shortcut|meaning|
+|-------|-----------|
 |bs|Broadsword|
 |gs|Greatsword|
 |ba|Battle Ax|
