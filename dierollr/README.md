@@ -13,13 +13,14 @@ Following the opening `/r ` is a string describing the die roll
 |example|description|
 |-------|-----------|
 |d6|roll a d6 (a 6 sided die)|
-|2d8+3|roll two d8m and add 3 to the result|
+|2d8+3|roll two d8 and add 3 to the result|
 |d8-3+d4|roll a d8, a d4, and subtract 3|
-|d% // attack Balrog|roll a pencentile die (d100) and note that this is for my attack of the Balrog|
+|d% // attack Balrog|roll a percentile die (d100) and note that this is for my attack of the Balrog|
 
 ### Shortcuts
 
 Certain common weapons are included as two letter abbreviations
+ - see abbrevs.js and macros.js
 
 |shortcut|meaning|
 |-------|-----------|
@@ -29,12 +30,13 @@ Certain common weapons are included as two letter abbreviations
 |ga|Great Ax|
 |cb|Composite Bow|
 
- - add an extra "s" at the end to roll "Special" damage
+ - add an extra "s" at the end to roll "Special" damage, e.g. `bss`
 
 ### Examples
 
 <pre>
 /r d%        Roll a percentil die, e.g. to hit or for Spell Resistance
+/r d00       00 is also a shortcut for 100
 /r bs+4      Broadsword with 4 extra damage (e.g. Bladesharp 4)
 /r gss+d4-2  Greatsword Special and you have a d4 damage bonus, but Dullblade 2
 /r cb+3      Comp Bow with Speedart

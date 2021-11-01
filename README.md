@@ -8,10 +8,16 @@ Listens for commands with the prefix /rq.
  - All text is converted to lowercase
  - Mentions (e.g. @JohnDoe) are ignored.
 
-
 [Technical Presentation for Port Townsend Web Developers](docs/presentation.md)
 
-## Commands
+### New Beta Feature, dierollr, as of November 2021
+
+ - Commands starting with the prefix /r are treated as die roll commands
+ - [Instructions here](https://github.com/MorganConrad/runequest-discordbot/tree/main/dierollr#readme)
+ - code in the dierollr folder
+
+
+## Discordbot Commands (all start with /rq)
 
 Many commands take one or more optional numbers NN in the range 01-100 (00 also means 100), or use "x" to mean pick one at random
 
@@ -168,6 +174,3 @@ The tests folder holds some very basic unit tests.
 <br>
 <a href="https://www.buymeacoffee.com/flyingspaniel" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-## In Development, beta...
-
-**dierollr** listens for die roll commands starting with /r

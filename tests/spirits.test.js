@@ -20,12 +20,12 @@ const SOME_KNOWN_SPELLS = {
 
 test("some known spirits", function(t) {
   for (let [nn, expectedResult] of Object.entries(SOME_KNOWN_SPIRITS) ) {
-    let result = bot.handleUserInput(`/rq summon ${nn}`).split('\n')[0];
+    let result = callBot(`/rq summon ${nn}`).split('\n')[0];
     t.equals(result, expectedResult);
   }
 
   // test multiple
-  let result = bot.handleUserInput(`/rq summon 26 70`).split('\n');
+  let result = callBot(`/rq summon 26 70`).split('\n');
   t.equals(result[0], SOME_KNOWN_SPIRITS[26]);
   t.equals(result[1], SOME_KNOWN_SPIRITS[70]);
 
@@ -35,14 +35,22 @@ test("some known spirits", function(t) {
 
 test("some known spells", function(t) {
   for (let [nn, expectedResult] of Object.entries(SOME_KNOWN_SPELLS) ) {
-    let result = bot.handleUserInput(`/rq spell ${nn}`).split('\n')[0].substr(18);  // strip leading stuff
+    let result = callBot(`/rq spell ${nn}`).split('\n')[0].substr(18);  // strip leading stuff
     t.equals(result, expectedResult);
   }
 
   // test multiple
-  let result = bot.handleUserInput(`/rq spell 39 74`).split('\n');
+  let result = callBot(`/rq spell 39 74`).split('\n');
   t.equals(result[0].substr(18), SOME_KNOWN_SPELLS[39]);
   t.equals(result[1].substr(18), SOME_KNOWN_SPELLS[74]);
 
   t.end();
 });
+
+
+function callBot(line) {
+  return bot.handleUserInput({
+    content: line,
+    author: "test"
+  })
+}

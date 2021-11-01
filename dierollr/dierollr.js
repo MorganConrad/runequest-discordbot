@@ -2,87 +2,94 @@ const ABBREVS = require('./abbrevs.js');
 const MACROS = require('./macros.js');
 
 const PERCENTILES = ['%', '00'];
+const HELP_URL = "https://github.com/MorganConrad/runequest-discordbot/blob/main/dierollr/README.md";
 
-let op = "+";
-let temps = {}
 
 function handleUserInput(message) {
-  // console.log("in dierollr");
-  // console.dir(message);
-  op = "+"; // always start in + mode
-  let [line, comment] = message.content.substr(2).toLowerCase().split('//');
+  let lineLowerCase = message.content.substr(2).toLowerCase(); // drop the leading /r
+  let [command, comment] = lineLowerCase.split('//');
 
-  line = line.replace(/ +/g, '');  // eliminate all spaces
-  if (line.startsWith('='))
-    return addTemp(line, message.author);
-  line = doAbbrevs(line, temps);
-  line = doAbbrevs(line, MACROS);
-  line = doAbbrevs(line, ABBREVS);
-  // console.log(line);
-  let parts = line.split(/([+-])/);
-  // console.dir(parts);
-  let parsed = parts.map(parse1);
-  // console.dir(parsed);
-  let result = parsed.reduce(addEmUp, { rolls: "", sum: 0 });
+  command = command.replace(/ +/g, '');  // eliminate all spaces
+
+  if (!command || (command === 'help'))
+    return `For help, see ` + HELP_URL;
+
+  let expanded = expandAllAbbreviations(command);
+  let tokens = expanded.split(/([+-])/);
+  let parsed = tokens.map(parseToken);
+  let result = computeResult(parsed);
 
   comment = comment ? "  // " + comment.trim() : "";
   return `player: ${message.author}${comment}\nrolls: ${result.rolls}\nresult: ${result.sum}`
 }
 
 
-function addEmUp(prev, curr) {
-  if (curr.op) {
-    op = curr.op;
-    return prev;
+function expandAllAbbreviations(line) {
+  line = doAbbrevs(line, MACROS);
+  line = doAbbrevs(line, ABBREVS);
+  return line;
+}
+
+
+function parseToken(token) {
+  if (token === '+')
+    return { sign: 1 };
+  else if (token === '-')
+    return { sign: -1};
+
+  else if (token.includes('d'))
+    return handleDieCommand(token);
+
+  else return {  // it's a constant
+    rolls: token,
+    sum: parseInt10(token)
   }
-  else {
-    return {
-      rolls: prev.rolls + " " + curr.rolls,
-      sum: add(prev, curr)
+}
+
+
+function computeResult(parsed) {
+  let sign = 1;
+  let rolls = "";
+  let sum = 0;
+
+  for (let p of parsed) {
+    if (p.sign)
+      sign = p.sign;
+    else {
+      rolls = rolls + " " + p.rolls;
+      sum = sum + (sign * p.sum);
     }
   }
-}
 
-
-function add(prev, curr) {
-  switch(op) {
-     case '-' : return prev.sum - curr.sum;
-     case '+' : return prev.sum + curr.sum;
-  }
-}
-
-function parse1(s) {
-  if ((s === '+') || (s === '-'))
-    return { op: s };
-  let parts = s.split('d');
-  // console.dir(parts);
-  if (parts.length === 1) {
-    let v = parseInt(parts[0], 10);
-    return { rolls:parts[0], sum:v };
-  }
-
-  else {
-    let count = parseInt(parts[0] || '1', 10);
-    let p1 = parts[1];
-    let sides = 100;
-    if (!PERCENTILES.includes(p1))
-      sides = parseInt(parts[1], 10);
-    return roll(count, sides, s);
+  return {
+    rolls,
+    sum
   }
 }
 
 
-function roll(count, sides, str) {
-  // console.dir( { count, sides });
+/**
+ * Handle a string like 2d8
+ * @param dieCommand string, e.g. "2d8" or "d%"
+ * @returns {{rolls, sum}}
+ */
+function handleDieCommand(dieCommand) {
+  let [countStr, sidesStr] = dieCommand.split('d');
+  let count = parseInt10(countStr || '1');  // might be missing, default to 1
+  let sides = PERCENTILES.includes(sidesStr) ? 100 : parseInt10(sidesStr);
+  return roll(count, sides, dieCommand);
+}
+
+
+function roll(count, sides, dieCommand) {
   let rolls = [];
   let sum = 0;
-  for (let i=0; i<count; i++) {
+  for (let i = 0; i < count; i++) {
     rolls[i] = Math.floor(Math.random() * sides) + 1;
     sum += rolls[i]
   }
 
-  // console.dir(rolls);
-  return { rolls: str + JSON.stringify(rolls), sum };
+  return { rolls: dieCommand + JSON.stringify(rolls), sum };
 }
 
 
@@ -94,21 +101,15 @@ function doAbbrevs(str, map = {}) {
 }
 
 
-function addTemp(line, author) {
-  let [ignore, k, v] = line.split("=");
-  let msg = "";
-  if (k === '_clear_') {
-    temps = {};
-    msg = `${author} cleared temps`;
-  }
-  else {
-    let tested = handleUserInput({content: "/r " + v, author});
-    temps[k] = v;
-    msg = `MACRO:  ${author} added temporary macro ${k} = ${v}\ntest results o.k.:\n${tested}`;
+function parseInt10(s) {
+  let val = parseInt(s, 10);
+  if (Number.isNaN(val)) {
+    let msg = `Error: cannot parse ${s} as an integer`;
+    console.error(msg);
+    // throw new Error(msg); just keep going for now...
   }
 
-  // console.log(msg);
-  return msg;
+  return val;
 }
 
 
